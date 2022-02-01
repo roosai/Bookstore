@@ -1,9 +1,19 @@
 package kevat22.Bookstore.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Book {
-	String title, author, isbn;
-	int year;
-	double price;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String title, author, isbn;
+	private int year;
+	private double price;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -21,6 +31,12 @@ public class Book {
 	}
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public int getYear() {
 		return year;
@@ -48,8 +64,8 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", isbn=" + isbn + ", year=" + year + ", price=" + price
-				+ "]";
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", isbn=" + isbn + ", year=" + year
+				+ ", price=" + price + "]";
 	}
 	
 	
