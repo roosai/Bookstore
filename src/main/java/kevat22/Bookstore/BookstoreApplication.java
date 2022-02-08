@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 
 import kevat22.Bookstore.domain.Book;
 import kevat22.Bookstore.domain.BookRepository;
+import kevat22.Bookstore.domain.Category;
+import kevat22.Bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -21,11 +23,15 @@ public class BookstoreApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
 		return (args) ->{
 			log.info("save a couple of books");
-			repository.save(new Book("Rec", "Marisha Rasi-Koskinen", "978-951", 2020, 21.50));
-			repository.save(new Book("Nainen joka unohti", "Liane Moriarty", "978-951-0", 2010, 10.60));
+			crepository.save(new Category("Horror"));
+			crepository.save(new Category("Romance"));
+			crepository.save(new Category("Novel"));
+			
+			repository.save(new Book("Rec", "Marisha Rasi-Koskinen", "978-951", 2020, 21.50, crepository.findByName("Horror").get(0)));
+			repository.save(new Book("Nainen joka unohti", "Liane Moriarty", "978-951-0", 2010, 10.60, crepository.findByName("Romance").get(0)));
 			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {

@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import kevat22.Bookstore.domain.Book;
 import kevat22.Bookstore.domain.BookRepository;
+import kevat22.Bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookRepository repository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 	
 	@RequestMapping(value= {"/", "/booklist"})
 	public String booklist (Model model) {
@@ -24,6 +28,7 @@ public class BookController {
 	@RequestMapping(value="/add")
 	public String addBook (Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
 		return "addbook";
 	}
 	@RequestMapping(value="/save", method = RequestMethod.POST)
@@ -39,6 +44,7 @@ public class BookController {
 	@RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", repository.findById(bookId));
+		model.addAttribute("categories", crepository.findAll());
 		return "editbook";
 	}
 
